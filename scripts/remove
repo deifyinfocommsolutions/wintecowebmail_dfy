@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# LOAD SETTINGS
+#=================================================
+
+# Retrieve arguments
+app=$YNH_APP_INSTANCE_NAME
+domain=$(ynh_app_setting_get $app domain)
+
+# Remove configuration files
+ynh_secure_remove /etc/nginx/conf.d/$domain.d/$app.conf
+
+# Restart services
+systemctl reload nginx
